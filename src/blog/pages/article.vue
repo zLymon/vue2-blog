@@ -2,7 +2,14 @@
     <div class="article">
         <div class="session">
             <h2>{{ title }}</h2>
-            <span>{{ createTime }}</span>
+            <div class="article-info">
+                <span>{{ createTime }}</span>
+                <div class="tags">
+                    <span>{{ tag }}</span>
+                </div>
+                <!-- <span class="tags" v-for="(item, index) in tags" :key="index">{{ item }}</span> -->
+            </div>
+            <!-- <span>{{ createTime }}</span> -->
             <p class="previewContainer markdown-body" v-html="compileMarkdown">{{ content }}</p>
         </div>
         <comment :id="this.id"></comment>
@@ -40,7 +47,8 @@ export default {
         return {
             title: '',
             createTime: null,
-            content: ''
+            content: '',
+            tag: ''
         }
     },
     methods: {
@@ -66,6 +74,7 @@ export default {
             this.title = response.data.message.title
             this.createTime = this.formatTime(response.data.message.createTime)
             this.content = response.data.message.content
+            this.tag = response.data.message.tag
         })
         .catch((err) => {
             console.log(err)
@@ -91,10 +100,23 @@ export default {
         padding: 10px;
         text-align: left;
     }
-    span {
+    .article-info {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid rgba(138, 138, 138, .3);
         color: rgba(138, 138, 138, .7);
-        display: block;
-        border-bottom: 1px solid rgba(138, 138, 138, .3)
+        span {
+            color: rgba(138, 138, 138, .7);
+        }
+        .tags {
+            span {
+                padding: 5px;
+                border-radius: 20px;
+                background-color: rgba(138,138,138,.3);
+                color: #000;
+                margin: 0 10px;
+            }
+        }
     }
     a {
         color:rgb(145, 200, 255);

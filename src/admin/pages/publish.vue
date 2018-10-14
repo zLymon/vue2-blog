@@ -4,9 +4,14 @@
             <div class="btn" @click="getMdValueFn">获取mdValue</div>
             <div class="btn" @click="getHtmlValueFn">获取htmlValue</div>
         </div>
+        <div class="tags">
+            <label for="tags">标签</label>
+            <input type="text" name="tag" id="tag" ref="tag">
+        </div>
         <div class="title">
             <label for="title">文章标题</label>
             <input type="text" name="title" id="title" ref="title">
+            
             <button @click="publish">发布文章</button>
         </div>
         <div class="maskContainer" v-if="dilogStatus">
@@ -38,7 +43,7 @@ export default {
             msgShow: '我要显示的内容',
             dilogStatus:false,
             msg: {
-                mdValue:'## Vue-markdownEditor'
+                mdValue:'# 请输入标题'
             }
         }
     },
@@ -57,7 +62,7 @@ export default {
         publish() {
             let title = this.$refs.title.value
             let content = this.msg.mdValue
-            
+            let tag = this.$refs.tag.value
             let createTime = new Date().toLocaleDateString()
 
             if(this.isEmpty(title) || this.isEmpty(content)) {
@@ -66,6 +71,7 @@ export default {
             }
             this.axios.post('/admin/publish', {
                 title: title,
+                tag: tag,
                 content: content,
                 createTime: createTime
             })
@@ -111,13 +117,7 @@ export default {
         border: 1px solid #000;
         width: 40%;
     }
-    button {
-        float: right;
-        padding: 10px;
-        background-color: rgb(145, 200, 255);
-        color: #fff;
-        cursor: pointer
-    }
+    
 }
     .publish {
         height: 100%;
@@ -127,6 +127,13 @@ export default {
         // align-items: center;
         position: relative;
         margin-left: 210px;
+        button {
+            float: right;
+            padding: 10px;
+            background-color: rgb(145, 200, 255);
+            color: #fff;
+            cursor: pointer
+        }
     }
     .btnsContainer{
         // position: absolute;
