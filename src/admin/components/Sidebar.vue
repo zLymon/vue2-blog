@@ -50,16 +50,22 @@ export default {
                         {name: '项目经验',link: '/project'}
                     ]
                 }
-            ]
+            ],
+            // 信息在每次组件加载之前从localStorage获取，所以不能将state放在computed属性内
+            ...mapState([
+                '_id',
+                'username',
+                'isLogin'
+            ])
         }
     },
-    computed: {
-        ...mapState([
-            '_id',
-            'username',
-            'isLogin'
-        ])
-    },
+    // computed: {
+    //     ...mapState([
+    //         '_id',
+    //         'username',
+    //         'isLogin'
+    //     ])
+    // },
     methods: {
         toggle(index) {
             this.functions[index].isActive = !this.functions[index].isActive
@@ -70,6 +76,10 @@ export default {
             alert('注销成功')
             this.$router.push({path: '/admin'})
         }
+    },
+    created() {
+        this.username = getStore('username')
+        this.isLogin = getStore('isLogin')
     }
 }
 </script>
