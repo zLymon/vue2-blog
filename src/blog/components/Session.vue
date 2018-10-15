@@ -2,9 +2,6 @@
     <div class="session">
         <h2>{{ title }}</h2>
         <span>{{ createTime }}</span>
-        <!-- <div v-html="compileMarkdown">
-            {{ content }}
-        </div> -->
         <p>{{ content }}</p>
         <router-link :to="{name: 'Article', params: {id: id}}">阅读全文</router-link>
     </div>
@@ -12,17 +9,6 @@
 <script>
 import axios from 'axios'
 import marked from 'marked'
-let rendererMD = new marked.Renderer()
-marked.setOptions({
-    renderer: rendererMD,
-    gfm: true,
-    tables: true,
-    breaks: false,
-    pedantic: false,
-    sanitize: false,
-    smartLists: true,
-    smartypants: false
-})
 
 export default {
     name: 'session',

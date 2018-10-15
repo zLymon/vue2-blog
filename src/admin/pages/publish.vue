@@ -5,13 +5,10 @@
             <div class="btn" @click="getHtmlValueFn">获取htmlValue</div>
         </div>
         <div class="tags">
-            <label for="tags">标签</label>
-            <input type="text" name="tag" id="tag" ref="tag">
-        </div>
-        <div class="title">
-            <label for="title">文章标题</label>
-            <input type="text" name="title" id="title" ref="title">
-            
+            <div class="input">
+                <label for="tags">标签</label>
+                <input type="text" name="tag" id="tag" ref="tag">
+            </div>
             <button @click="publish">发布文章</button>
         </div>
         <div class="maskContainer" v-if="dilogStatus">
@@ -60,17 +57,15 @@ export default {
             }
         },
         publish() {
-            let title = this.$refs.title.value
             let content = this.msg.mdValue
             let tag = this.$refs.tag.value
             let createTime = new Date().toLocaleDateString()
 
-            if(this.isEmpty(title) || this.isEmpty(content)) {
-                alert('标题或内容不能为空')
+            if(this.isEmpty(tag) || this.isEmpty(content)) {
+                alert('标签或内容不能为空')
                 return
             }
             this.axios.post('/admin/publish', {
-                title: title,
                 tag: tag,
                 content: content,
                 createTime: createTime
@@ -106,14 +101,12 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.title {
+.tags {
+    display: flex;
+    justify-content: flex-end;
     width: 90%;
     margin: 0 auto;
-    label {
-        font-size: 24px
-    }
     input {
-        font-size: 24px;
         border: 1px solid #000;
         width: 40%;
     }
@@ -122,13 +115,9 @@ export default {
     .publish {
         height: 100%;
         background: #ddd;
-        // display: flex;
-        // justify-content: center;
-        // align-items: center;
         position: relative;
         margin-left: 210px;
         button {
-            float: right;
             padding: 10px;
             background-color: rgb(145, 200, 255);
             color: #fff;
