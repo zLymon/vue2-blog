@@ -5,7 +5,7 @@
             <div class="article-info">
                 <span>{{ createTime }}</span>
                 <div class="tags">
-                    <span>{{ tag }}</span>
+                    <span v-for="(item, index) in tags" :key="index">{{ item }}</span>
                 </div>
                 <!-- <span class="tags" v-for="(item, index) in tags" :key="index">{{ item }}</span> -->
             </div>
@@ -48,7 +48,7 @@ export default {
             title: '',
             createTime: null,
             content: '',
-            tag: ''
+            tags: []
         }
     },
     methods: {
@@ -74,7 +74,7 @@ export default {
             this.title = response.data.message.title
             this.createTime = this.formatTime(response.data.message.createTime)
             this.content = response.data.message.content
-            this.tag = response.data.message.tag
+            this.tags = response.data.message.tag.split(' ')
         })
         .catch((err) => {
             console.log(err)

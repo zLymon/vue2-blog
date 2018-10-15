@@ -8,7 +8,6 @@ import List from '@/blog/pages/list'
 import AboutBlog from '@/blog/pages/AboutBlog'
 import AboutMe from '@/blog/pages/AboutMe'
 import article from '@/blog/pages/article'
-import test from '@/blog/pages/test'
 
 import admin from '@/admin/pages/admin'
 import manage from '@/admin/pages/manage'
@@ -53,11 +52,6 @@ const routes = [
       {path: '/project', name: 'project', component: project}
     ],
     meta: {requiresAuth: true},
-  },
-  {
-    path: '/test',
-    name: 'test',
-    component: test
   }
 ]
 

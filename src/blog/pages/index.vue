@@ -1,6 +1,6 @@
 <template>
     <div id="index">
-        <sidebar :number="newNumber" v-if="this.articles.length"></sidebar>
+        <sidebar></sidebar>
         <session v-for="(item, index) in reverse" :key="index" 
         :title="item.title"
         :createTime="item.createTime"
@@ -19,6 +19,7 @@ import axios from 'axios'
 import Header from '@/blog/components/Header'
 import Sidebar from '@/blog/components/Sidebar'
 import session from '@/blog/components/Session'
+import { setStore } from '../../config/localStorage'
 
 export default {
     name: 'Index',
@@ -49,7 +50,7 @@ export default {
             return createTime
         }
     },
-    created() {
+    beforeCreate() {
         this.axios.get('/users/getSummary')
         .then((response) => {
             for (let i = 0; i < response.data.length; i++) {
@@ -60,6 +61,7 @@ export default {
                     createTime: this.formatTime(response.data[i].createTime)}
                 )
             }
+            setStore('articleNum', this.articles.length)
         })
         .catch((err) => {
             console.log(err)

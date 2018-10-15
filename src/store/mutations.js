@@ -31,6 +31,7 @@ const mutations = {
     },
     [RECORD_ARTICLENUM](state, num) {
         state.articleNum = num
+        setStore('articleNum', num)
     },
     [GET_ARTICLENUM](state, num) {
         

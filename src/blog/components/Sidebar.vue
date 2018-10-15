@@ -9,25 +9,26 @@
 </template>
 <script>
 import axios from 'axios'
+import { mapState } from 'vuex'
+import { getStore } from '../../config/localStorage'
+
 export default {
     name: 'Sidebar',
-    props: {
-        number: Number
-    },
     data() {
         return {
             type: [
                 {
                     title: '文章数量',
-                    number: this.number
+                    number: this.articleNum
                 }
-            ]
+            ],
+            ...mapState([
+                'articleNum'
+            ])
         }
     },
-    watch: {
-        number() {
-            this.number = this.number
-        }
+    beforeCreate() {
+        this.articleNum = getStore('articleNum')
     }
 }
 </script>

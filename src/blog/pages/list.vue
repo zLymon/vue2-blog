@@ -1,6 +1,6 @@
 <template>
     <div id="list">
-        <sidebar :number="newNumber" v-if="this.articleList.length"></sidebar>
+        <sidebar></sidebar>
         <div class="articleList">
             <li class="item" v-for="(item, index) in reverse" :key="index">
                 {{ item.createTime }}：<router-link :to="{name: 'Article', params: {id: item.id}}">{{ item.title }}</router-link>
@@ -8,7 +8,7 @@
         </div>
         <div class="filter">
             <p>文章标签</p>
-            <li class="item" v-for="(item, index) in newTagList" :key="index" @click="getListByTag(item)">
+            <li class="item" v-for="(item, index) in tagList" :key="index" @click="getListByTag(item)">
                 - {{ item }}
             </li>
         </div>
@@ -17,6 +17,8 @@
 <script>
 import Sidebar from '@/blog/components/Sidebar'
 import axios from 'axios'
+import { mapState } from 'vuex'
+import { getStore } from '../../config/localStorage'
 export default {
     name: 'List',
     components: {
@@ -25,18 +27,15 @@ export default {
     data() {
         return {
             articleList: [],
-            number: 0,
             tagList: [],
-            newTagList: []
+            ...mapState([
+                'articleNum'
+            ])
         }
     },
     computed: {
         reverse() {
             return this.articleList.reverse()
-        },
-        newNumber() {
-            this.number = this.articleList.length
-            return this.number
         }
     },
     methods: {
@@ -67,16 +66,15 @@ export default {
                         id: res.data[i]._id,
                         title:res.data[i].title,
                         createTime: this.formatTime(res.data[i].createTime),
-                        tag: res.data[i].tag
+                        tag: res.data[i].tag + ' '
                     })
                 }
             })
-            .catch((err) => {
-                console.log(err)
-            }) 
         }
     },
-    created() {
+    beforeCreate() {
+        let str = ''
+        let list = []
         this.axios.get('/users/getSummary')
         .then((response) => {
             for (let i = 0; i < response.data.length; i++) {
@@ -84,13 +82,14 @@ export default {
                     id: response.data[i]._id,
                     title:response.data[i].title,
                     createTime: this.formatTime(response.data[i].createTime),
-                    tag: response.data[i].tag
+                    tag: response.data[i].tag + ' '
                 })
-                this.tagList[i] = this.articleList[i].tag
+                str = str + this.articleList[i].tag
             }
-            this.newTagList = this.unique(this.tagList, this.newTagList)
-            //清空原有数组
-            this.tagList = []
+            this.articleNum = getStore('articleNum')
+            str = str.replace(/(^\s*)|(\s*$)/g, "")
+            list = str.split(' ')
+            this.tagList = this.unique(list, this.tagList)
         })
         .catch((err) => {
             console.log(err)
