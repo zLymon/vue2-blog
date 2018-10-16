@@ -31,7 +31,7 @@ export default {
                     isActive: false,
                     children: [
                         {name: '发布文章', link: '/publish'},
-                        {name: '删除文章', link: '/deleteArticle'}
+                        {name: '编辑文章', link: '/deleteArticle'}
                     ]
                 },
                 {

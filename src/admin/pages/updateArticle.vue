@@ -9,7 +9,7 @@
                 <label for="tags">标签</label>
                 <input type="text" name="tag" id="tag" ref="tag">
             </div>
-            <button @click="publish">发布文章</button>
+            <button @click="update">更新文章</button>
         </div>
         <div class="maskContainer" v-if="dilogStatus">
             <div class="contentContainer">
@@ -26,15 +26,17 @@
             :navStatusP="true"
             :icoStatusP="true"  
             @childevent="childEventHandler"
+            v-if="msg.mdValue!=='# 请输入标题'"
             ></markdown>
         </div>
     </div>
 </template>
 <script>
 import markdown from '@/admin/components/markdown'
+import axios from 'axios'
 
 export default {
-    name: 'publish',
+    name: 'updateArticle',
     data() {
         return {
             msgShow: '我要显示的内容',
@@ -56,19 +58,21 @@ export default {
                 return false
             }
         },
-        publish() {
+        update() {
             let content = this.msg.mdValue
             let tag = this.$refs.tag.value
-            let createTime = new Date().toLocaleDateString()
+            let id = this.$route.query.id
+            // let createTime = new Date().toLocaleDateString()
 
             if(this.isEmpty(tag) || this.isEmpty(content)) {
                 alert('标签或内容不能为空')
                 return
             }
-            this.axios.post('/admin/publish', {
+            this.axios.post('/admin/updateArticle', {
+                id: id,
                 tag: tag,
-                content: content,
-                createTime: createTime
+                content: content
+                // createTime: createTime
             })
             .then((response) => {
                 if(response.data.status === 1) {
@@ -97,6 +101,19 @@ export default {
             this.msgShow='';
             this.dilogStatus=false;
         }
+    },
+    mounted() {
+        let id = this.$route.query.id
+        this.axios.get('/admin/getUpdateArticle', {
+            params: {
+                id: id
+            }
+        })
+        .then((res) => {
+            this.$refs.tag.value = res.data.message.tag
+            this.msg.mdValue = res.data.message.content
+            console.log(res)
+        })
     }
 }
 </script>

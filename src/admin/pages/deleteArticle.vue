@@ -2,6 +2,7 @@
     <div class="list">
         <div class="articleList" v-for="(item, index) in reverse" :key="index">
             <li class="item">
+                <button @click="updateArticle(item.id)">编辑</button>
                 <button @click="deleteArticle(item.id)">删除</button>
                 {{ item.createTime }}————
                 <router-link :to="{name: 'Article', params: {id: item.id}}">{{ item.title }}</router-link>
@@ -46,6 +47,17 @@ export default {
             .catch((err) => {
                 console.log(err)
             })
+        },
+        updateArticle(id) {
+            this.$router.push({path: '/updateArticle',name: 'updateArticle', query: {id: id}})
+            // this.axios.post('/admin/updateArticle', {
+            //     id: id
+            // })
+            // .then((res) => {
+            //     if(res.data.status === -1) {
+
+            //     }
+            // })
         }
     },
     created() {

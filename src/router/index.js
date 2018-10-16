@@ -17,6 +17,7 @@ import deleteArticle from '@/admin/pages/deleteArticle'
 import deleteComment from '@/admin/pages/deleteComment'
 import fieldWork from '@/admin/pages/fieldWork'
 import project from '@/admin/pages/project'
+import updateArticle from '@/admin/pages/updateArticle'
 
 Vue.use(Router)
 
@@ -49,7 +50,8 @@ const routes = [
       {path: '/deleteArticle', name: 'deleteArticle', component: deleteArticle},
       {path: '/deleteComment', name: 'deleteComment', component: deleteComment},
       {path: '/fieldWork', name: 'fieldWork', component: fieldWork},
-      {path: '/project', name: 'project', component: project}
+      {path: '/project', name: 'project', component: project},
+      {path: '/updateArticle',name: 'updateArticle', component: updateArticle}
     ],
     meta: {requiresAuth: true},
   }
