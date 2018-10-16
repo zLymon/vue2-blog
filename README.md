@@ -1,21 +1,50 @@
-# views
+# 前言
 
-> A Vue.js project
+这是使用了Vue.js开发的一个个人博客
 
-## Build Setup
+## 技术栈
 
-``` bash
-# install dependencies
+vue-cli2.9.3 + vuex + vue-router + webpack + sass + axios + marked.js
+
+## 项目运行
+
+```
+git clone https://github.com/zLymon/vue2-blog.git  
+
+cd vue2-blog
+
 npm install
 
-# serve with hot reload at localhost:8080
 npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
 ```
+# v1.0
+## 功能
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+- [x] 发布文章(基于ovenslove的[markdown编辑器](https://github.com/ovenslove/vue-mdEditor))
+- [x] 删除文章
+- [x] 修改文章
+- [x] 游客文章评论
+- [x] 删除游客评论
+- [x] 标签筛选文章
+
+# v2.0
+
+- [ ] 使用UI框架美化样式
+- [ ] 优化数据库存储格式
+- [ ] 新增访客量记录
+
+## 后台管理项目
+
+[后台项目传送地址](https://github.com/zLymon/node-blog.git)
+
+### 项目运行
+
+```
+git clone https://github.com/zLymon/node-blog.git
+
+cd node-blog
+
+npm install
+
+npm start
+```
